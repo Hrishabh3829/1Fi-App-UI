@@ -1,0 +1,38 @@
+[
+  {
+    "tenureMonths": 3,
+    "interestRate": 0,
+    "isNoCost": true,
+    "processingFee": 0
+  },
+  {
+    "tenureMonths": 6,
+    "interestRate": 0,
+    "isNoCost": true,
+    "processingFee": 0
+  },
+  {
+    "tenureMonths": 9,
+    "interestRate": 12,
+    "isNoCost": false,
+    "processingFee": 199
+  },
+  {
+    "tenureMonths": 12,
+    "interestRate": 14,
+    "isNoCost": false,
+    "processingFee": 299
+  },
+  {
+    "tenureMonths": 18,
+    "interestRate": 15,
+    "isNoCost": false,
+    "processingFee": 399
+  },
+  {
+    "tenureMonths": 24,
+    "interestRate": 16,
+    "isNoCost": false,
+    "processingFee": 499
+  }
+]
