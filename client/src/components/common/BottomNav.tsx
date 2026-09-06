@@ -11,11 +11,11 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   onTabSelect,
 }) => {
   const navItems = [
-    { id: 'home', label: 'Home', icon: Home, href: '/dashboard' },
-    { id: 'shop', label: 'Shop', icon: Store, href: '/shop' },
-    { id: 'emi-dues', label: 'EMI Dues', icon: ReceiptIndianRupee, href: '/emi-dues' },
-    { id: 'limit', label: 'Limit', icon: ChartNoAxesCombined, href: '/pledged-funds' },
-    { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'shop', label: 'Shop', icon: Store },
+    { id: 'emi-dues', label: 'EMI Dues', icon: ReceiptIndianRupee },
+    { id: 'limit', label: 'Limit', icon: ChartNoAxesCombined },
+    { id: 'profile', label: 'Profile', icon: User },
   ];
 
   return (
@@ -79,4 +79,3 @@ export const BottomNav: React.FC<BottomNavProps> = ({
     </nav>
   );
 };
-

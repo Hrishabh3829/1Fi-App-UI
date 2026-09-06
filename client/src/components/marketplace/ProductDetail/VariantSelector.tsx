@@ -27,10 +27,10 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
             <button
               key={v.id}
               onClick={() => onSelectVariant(v)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-medium border transition-all text-left flex items-center gap-2 ${
+              className={`px-3.5 py-2 rounded-xl text-xs border transition-all text-left flex items-center gap-2 ${
                 isSelected
-                  ? 'border-fi-purple bg-purple-50 text-fi-purple shadow-xs ring-1 ring-fi-purple'
-                  : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                  ? 'border-[#712CDC] bg-purple-50 text-[#712CDC] shadow-xs ring-1 ring-[#712CDC] font-semibold'
+                  : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 font-medium'
               }`}
             >
               <span>{v.label}</span>

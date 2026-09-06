@@ -1,7 +1,6 @@
 import React from 'react';
 import { Product } from '../../types/product';
 import { Card } from '../common/Card';
-import { Badge } from '../common/Badge';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { calculateMonthlyEmi } from '../../utils/calculateEmi';
 
@@ -11,45 +10,64 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
-  // Estimate lowest monthly EMI (e.g. 6-month or 12-month tenure)
+  // Estimate lowest monthly EMI (6-month 0% No-Cost EMI)
   const minMonthlyEmi = calculateMonthlyEmi(product.basePrice, 0, 6);
 
   return (
-    <Card interactive onClick={onClick} className="flex flex-col gap-3 group">
-      <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center p-2">
+    <Card
+      interactive
+      onClick={onClick}
+      className="flex flex-col gap-2.5 p-3 group rounded-2xl border border-gray-100/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-purple-200 transition-all bg-white"
+    >
+      {/* Product Image */}
+      <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-[#FAFAFC] flex items-center justify-center p-3 border border-gray-100/60">
         <img
           src={product.images[0]}
           alt={product.name}
-          className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300"
+          className="object-contain max-h-full max-w-full group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
-        <div className="absolute top-2 right-2">
-          <Badge variant="purple" className="shadow-xs">
-            From {formatCurrency(minMonthlyEmi)}/mo
-          </Badge>
+        <div className="absolute top-2 left-2">
+          <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#712CDC]/10 text-[#712CDC] border border-[#712CDC]/20">
+            0% No-Cost
+          </span>
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 justify-between">
+      {/* Product Info */}
+      <div className="flex flex-col flex-1 justify-between gap-2">
         <div>
-          <div className="text-[11px] font-semibold text-fi-purple tracking-wider uppercase">
+          <span className="text-[10px] font-bold text-[#712CDC] tracking-wider uppercase">
             {product.brand}
-          </div>
-          <h3 className="font-semibold text-sm text-gray-900 line-clamp-1 group-hover:text-fi-purple transition-colors">
+          </span>
+          <h3 className="font-bold text-[13px] text-gray-900 line-clamp-1 group-hover:text-[#712CDC] transition-colors leading-snug">
             {product.name}
           </h3>
-          <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+          <p className="text-[11px] text-gray-500 line-clamp-1 mt-0.5">
             {product.description}
           </p>
         </div>
 
-        <div className="mt-3 flex items-baseline justify-between border-t border-gray-100 pt-2">
-          <span className="text-xs text-gray-400 font-medium">Starting at</span>
-          <span className="text-sm font-bold text-gray-900">
-            {formatCurrency(product.basePrice)}
-          </span>
+        {/* Pricing & EMI */}
+        <div className="pt-2 border-t border-gray-100 flex flex-col gap-1">
+          <div className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="text-sm font-extrabold text-gray-900 tracking-tight">
+              {formatCurrency(product.basePrice)}
+            </span>
+            {product.mrp && product.mrp > product.basePrice && (
+              <span className="text-[10px] text-gray-400 line-through font-normal">
+                {formatCurrency(product.mrp)}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1 text-[10.5px] font-medium text-emerald-700 bg-emerald-50/90 px-1.5 py-0.5 rounded-md w-fit">
+            <span>From</span>
+            <span className="font-bold text-emerald-800">{formatCurrency(minMonthlyEmi)}/mo</span>
+          </div>
         </div>
       </div>
     </Card>
   );
 };
+

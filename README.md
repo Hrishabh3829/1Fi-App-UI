@@ -57,8 +57,6 @@ A full-stack implementation of the **1Fi Marketplace** extension inside the exis
 │   │   │       └── EmptyState.tsx / ErrorState.tsx
 │   │   ├── pages/
 │   │   │   ├── ShopPage.tsx                 # 3-tab switcher (Brands, Stores, Marketplace)
-│   │   │   ├── TopBrandsTab.tsx             # Blank tab
-│   │   │   ├── NearbyStoresTab.tsx          # Blank tab
 │   │   │   ├── MarketplaceTab.tsx           # Product catalog & search
 │   │   │   └── ProductDetailPage.tsx        # Product specs, variants, and EMI plans
 │   │   ├── hooks/

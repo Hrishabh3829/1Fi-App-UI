@@ -11,7 +11,11 @@ export interface Product {
   category: string;
   images: string[];
   basePrice: number;
+  mrp?: number;
+  mfPledgeRequired?: number;
+  highlights?: string[];
   variants: ProductVariant[];
   description: string;
   specs: Record<string, string>;
 }
+

@@ -24,14 +24,14 @@ export const EMIPlanCard: React.FC<EMIPlanCardProps> = ({
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSelect()}
       className={`relative flex items-center justify-between p-3.5 rounded-2xl border transition-all cursor-pointer ${
         isSelected
-          ? 'border-fi-purple bg-purple-50/70 shadow-sm ring-1 ring-fi-purple'
+          ? 'border-[#712CDC] bg-purple-50/70 shadow-sm ring-1 ring-[#712CDC]'
           : 'border-gray-200 bg-white hover:border-gray-300'
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 text-fi-purple">
+        <div className="mt-0.5 text-[#712CDC]">
           {isSelected ? (
-            <CheckCircle2 className="w-5 h-5 fill-fi-purple text-white" />
+            <CheckCircle2 className="w-5 h-5 fill-[#712CDC] text-white" />
           ) : (
             <Circle className="w-5 h-5 text-gray-300" />
           )}

@@ -33,7 +33,7 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ images, name }) 
               key={idx}
               onClick={() => setActiveIdx(idx)}
               className={`relative w-16 h-16 rounded-xl overflow-hidden border-2 transition-all p-1 bg-white flex-shrink-0 ${
-                activeIdx === idx ? 'border-fi-purple shadow-sm' : 'border-gray-200 opacity-70'
+                activeIdx === idx ? 'border-[#712CDC] shadow-sm' : 'border-gray-200 opacity-70'
               }`}
             >
               <img
