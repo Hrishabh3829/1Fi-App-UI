@@ -20,7 +20,7 @@ export const SegmentedTabs: React.FC<SegmentedTabsProps> = ({
 }) => {
   return (
     <div
-      className={`inline-flex items-center bg-[#ECEBF8] p-1 rounded-full shadow-inner ${className}`}
+      className={`flex w-full items-center gap-1.5 sm:gap-2 rounded-full border border-[#ece5ff] bg-[#f5f0ff] p-1.5 shadow-[0_1px_3px_rgba(113,44,220,0.06)] ${className}`}
       role="tablist"
     >
       {tabs.map((tab) => {
@@ -28,18 +28,19 @@ export const SegmentedTabs: React.FC<SegmentedTabsProps> = ({
         return (
           <button
             key={tab.id}
+            type="button"
             role="tab"
             aria-selected={isActive}
             onClick={() => onTabChange(tab.id)}
-            className={`relative px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+            className={`relative flex-1 rounded-full py-2.5 sm:py-[11px] px-2 text-center text-xs sm:text-sm font-semibold tracking-[-0.005em] transition-all duration-200 outline-none select-none ${
               isActive
-                ? 'bg-white text-fi-purple shadow-sm'
-                : 'text-gray-500 hover:text-gray-800'
+                ? 'bg-white text-[#712CDC] shadow-[0_1px_3px_rgba(20,14,50,0.10),0_0_0_1px_rgba(113,44,220,0.08)]'
+                : 'text-gray-500 hover:text-gray-700'
             }`}
           >
-            {tab.label}
+            <span className="truncate block">{tab.label}</span>
             {isActive && (
-              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-fi-purple rounded-full" />
+              <span className="absolute bottom-1 sm:bottom-1.5 left-1/2 h-[2.5px] w-5 sm:w-[22px] -translate-x-1/2 rounded-full bg-[#712CDC]" />
             )}
           </button>
         );
@@ -47,3 +48,4 @@ export const SegmentedTabs: React.FC<SegmentedTabsProps> = ({
     </div>
   );
 };
+

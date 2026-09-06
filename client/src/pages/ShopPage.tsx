@@ -16,12 +16,12 @@ export const ShopPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('marketplace');
 
   return (
-    <div className="min-h-screen bg-fi-bg max-w-md mx-auto relative pb-16 flex flex-col">
+    <div className="min-h-screen bg-[#F5F5F7] max-w-[500px] mx-auto relative pb-28 flex flex-col antialiased">
       {/* Top Banner */}
       <ShopBanner />
 
-      {/* Segmented Tab Switcher */}
-      <div className="flex justify-center -mt-5 mb-4 z-20 px-4">
+      {/* Floating Segmented Tab Switcher */}
+      <div className="relative z-20 -mt-7 mb-4 px-3 sm:px-4">
         <SegmentedTabs
           tabs={TABS}
           activeTab={activeTab}
@@ -36,8 +36,9 @@ export const ShopPage: React.FC = () => {
         {activeTab === 'marketplace' && <MarketplaceTab />}
       </main>
 
-      {/* Fixed Bottom Navigation */}
+      {/* Floating Bottom Navigation Dock */}
       <BottomNav activeTab="shop" />
     </div>
   );
 };
+

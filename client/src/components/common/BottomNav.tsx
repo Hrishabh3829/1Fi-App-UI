@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, ShoppingBag, Receipt, TrendingUp, User } from 'lucide-react';
+import { Home, Store, ReceiptIndianRupee, ChartNoAxesCombined, User } from 'lucide-react';
 
 interface BottomNavProps {
   activeTab?: string;
@@ -11,19 +11,19 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   onTabSelect,
 }) => {
   const navItems = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'shop', label: 'Shop', icon: ShoppingBag },
-    { id: 'emi-dues', label: 'EMI Dues', icon: Receipt },
-    { id: 'limit', label: 'Limit', icon: TrendingUp },
-    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'home', label: 'Home', icon: Home, href: '/dashboard' },
+    { id: 'shop', label: 'Shop', icon: Store, href: '/shop' },
+    { id: 'emi-dues', label: 'EMI Dues', icon: ReceiptIndianRupee, href: '/emi-dues' },
+    { id: 'limit', label: 'Limit', icon: ChartNoAxesCombined, href: '/pledged-funds' },
+    { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
   ];
 
   return (
     <nav
       aria-label="Bottom Navigation"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-nav max-w-md mx-auto"
+      className="fixed inset-x-0 bottom-0 z-50 px-3 pb-[calc(12px+env(safe-area-inset-bottom))] pointer-events-none"
     >
-      <div className="flex justify-around items-center h-16 px-2">
+      <div className="mx-auto flex max-w-[500px] items-stretch rounded-[28px] bg-white border border-white/40 px-1.5 py-1.5 shadow-[0_8px_32px_rgba(20,14,50,0.12),0_0_0_1px_rgba(255,255,255,0.18)_inset] pointer-events-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -31,26 +31,47 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           return (
             <button
               key={item.id}
+              type="button"
               onClick={() => onTabSelect?.(item.id)}
-              className="flex flex-col items-center justify-center flex-1 py-1 text-center transition-colors group"
+              className={`group relative flex min-w-0 flex-1 flex-col items-center justify-center gap-[3px] rounded-[18px] px-1 py-2 text-center transition-all duration-200 outline-none ${
+                isActive ? 'text-[#712CDC]' : 'text-gray-400 hover:text-gray-600'
+              }`}
             >
-              <div className="relative">
-                <Icon
-                  className={`w-5 h-5 transition-transform group-active:scale-90 ${
-                    isActive ? 'text-fi-purple stroke-[2.5]' : 'text-gray-400 stroke-[1.75]'
-                  }`}
-                />
-              </div>
+              {isActive && (
+                <>
+                  {/* Active top pill indicator */}
+                  <span
+                    className="absolute left-1/2 -top-[3px] h-[3px] w-8 -translate-x-1/2 rounded-full bg-[#712CDC]"
+                    aria-hidden="true"
+                  />
+                  {/* Subtle radial glow */}
+                  <span
+                    className="absolute inset-1 rounded-[14px] opacity-50 pointer-events-none"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 50% 30%, rgba(113,44,220,0.14) 0%, transparent 70%)',
+                    }}
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+
+              <Icon
+                className={`relative h-[22px] w-[22px] transition-transform duration-200 group-active:scale-90 ${
+                  isActive
+                    ? 'stroke-[2] drop-shadow-[0_0_6px_rgba(113,44,220,0.3)]'
+                    : 'stroke-[1.75]'
+                }`}
+                aria-hidden="true"
+              />
+
               <span
-                className={`text-[10px] mt-1 font-medium transition-colors ${
-                  isActive ? 'text-fi-purple font-semibold' : 'text-gray-400'
+                className={`relative max-w-full truncate text-[10px] tracking-wide ${
+                  isActive ? 'font-bold' : 'font-medium'
                 }`}
               >
                 {item.label}
               </span>
-              {isActive && (
-                <span className="w-5 h-0.5 bg-fi-purple rounded-full mt-0.5" />
-              )}
             </button>
           );
         })}
@@ -58,3 +79,4 @@ export const BottomNav: React.FC<BottomNavProps> = ({
     </nav>
   );
 };
+
