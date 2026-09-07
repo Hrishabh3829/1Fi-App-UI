@@ -22,13 +22,14 @@ export const EMIPlanCard: React.FC<EMIPlanCardProps> = ({
       onClick={onSelect}
       role="radio"
       aria-checked={isSelected}
+      aria-label={`${plan.tenureMonths}-month EMI plan, ${formatCurrency(plan.monthlyAmount)} per month`}
       tabIndex={0}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSelect()}
       className={`relative flex items-center justify-between p-3.5 rounded-2xl border transition-all cursor-pointer ${
         isSelected
           ? 'border-[#712CDC] bg-purple-50/70 shadow-sm ring-1 ring-[#712CDC]'
           : 'border-gray-200 bg-white hover:border-gray-300'
-      }`}
+      } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#712CDC]/50`}
     >
       <div className="flex items-start gap-3">
         <div className="mt-0.5 text-[#712CDC]">

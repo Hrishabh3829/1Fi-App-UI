@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { EmiPlan } from '../../../types/emi';
 import { EMIPlanCard } from './EMIPlanCard';
 import { Skeleton } from '../../common/Skeleton';
@@ -20,10 +20,28 @@ export const EMIPlanSelector: React.FC<EMIPlanSelectorProps> = ({
   onSelectPlan,
   productPrice,
 }) => {
+  const [pendingPlan, setPendingPlan] = useState<EmiPlan | null>(null);
   const comparisonPlans = plans.filter((plan) => [3, 6, 9, 12].includes(plan.tenureMonths));
   const lowestMonthlyAmount = Math.min(...plans.map((plan) => plan.monthlyAmount));
   const bestValueTotal = Math.min(...plans.map((plan) => plan.totalPayable));
   const highestTotal = Math.max(...plans.map((plan) => plan.totalPayable));
+
+  useEffect(() => {
+    if (!pendingPlan) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPendingPlan(null);
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [pendingPlan]);
+
+  const requestPlanChange = (plan: EmiPlan) => {
+    if (!selectedPlan || selectedPlan.id === plan.id) {
+      onSelectPlan(plan);
+      return;
+    }
+    setPendingPlan(plan);
+  };
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -69,7 +87,7 @@ export const EMIPlanSelector: React.FC<EMIPlanSelectorProps> = ({
                 key={plan.id}
                 plan={plan}
                 isSelected={selectedPlan?.id === plan.id}
-                onSelect={() => onSelectPlan(plan)}
+                onSelect={() => requestPlanChange(plan)}
                 badge={plan.monthlyAmount === lowestMonthlyAmount ? 'Lowest EMI' : plan.totalPayable === bestValueTotal ? 'Best value' : undefined}
               />
             ))}
@@ -80,12 +98,54 @@ export const EMIPlanSelector: React.FC<EMIPlanSelectorProps> = ({
                 key={plan.id}
                 plan={plan}
                 isSelected={selectedPlan?.id === plan.id}
-                onSelect={() => onSelectPlan(plan)}
+                onSelect={() => requestPlanChange(plan)}
                 badge={plan.monthlyAmount === lowestMonthlyAmount ? 'Lowest EMI' : plan.totalPayable === bestValueTotal ? 'Best value' : undefined}
               />
             ))}
           </div>
         </>
+      )}
+
+      {pendingPlan && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+          role="presentation"
+          onMouseDown={(event) => event.target === event.currentTarget && setPendingPlan(null)}
+        >
+          <div
+            className="w-full max-w-sm rounded-2xl bg-white p-5 shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="change-plan-title"
+          >
+            <h3 id="change-plan-title" className="text-base font-bold text-gray-900">
+              Change EMI plan?
+            </h3>
+            <p className="text-xs text-gray-500 mt-1.5">
+              Switch to the {pendingPlan.tenureMonths}-month plan at {formatCurrency(pendingPlan.monthlyAmount)} per month?
+            </p>
+            <div className="flex gap-2 mt-5">
+              <button
+                type="button"
+                onClick={() => setPendingPlan(null)}
+                className="flex-1 rounded-full border border-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#712CDC]/40"
+              >
+                Keep current plan
+              </button>
+              <button
+                type="button"
+                autoFocus
+                onClick={() => {
+                  onSelectPlan(pendingPlan);
+                  setPendingPlan(null);
+                }}
+                className="flex-1 rounded-full bg-[#712CDC] px-4 py-2.5 text-xs font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#712CDC]/40"
+              >
+                Change plan
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

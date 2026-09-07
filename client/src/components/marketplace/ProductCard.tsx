@@ -17,6 +17,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) =>
     <Card
       interactive
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${product.name}, ${formatCurrency(product.basePrice)}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
       className="flex flex-col gap-2.5 p-3 group rounded-2xl border border-gray-100/90 shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-purple-200 transition-all bg-white"
     >
       {/* Product Image */}
