@@ -4,19 +4,6 @@ A full-stack implementation of the **1Fi Marketplace** extension inside the exis
 
 ---
 
-## 🏗️ Architecture & Technology Stack
-
-| Layer | Choice | Rationale |
-| :--- | :--- | :--- |
-| **Frontend** | React 18 + Vite + TypeScript | High performance, instant HMR, strict type safety |
-| **Styling** | Tailwind CSS v3 | Implements 1Fi's pill & rounded card aesthetic with custom design tokens |
-| **Data Fetching** | TanStack Query (React Query) | Handles loading, error, and caching states cleanly |
-| **State Management**| Zustand | Lightweight, predictable state for variant selection and EMI plan flow |
-| **Backend** | Node.js + Express + TypeScript | Lightweight mock API server with dynamic EMI computation |
-| **Data Store** | JSON Mock Collections | Separated product catalogs and tenure-based EMI calculations |
-
----
-
 ## 🎨 Design Tokens
 
 - **Primary Violet**: `#6D28D9` (accent text, active icons, buttons)
