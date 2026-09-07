@@ -11,6 +11,7 @@ import { ProceedCTA } from '../components/marketplace/ProductDetail/ProceedCTA';
 import { Skeleton } from '../components/common/Skeleton';
 import { ErrorState } from '../components/marketplace/ErrorState';
 import { formatCurrency } from '../utils/formatCurrency';
+import { formatEmiDate, getNextEmiDate } from '../utils/emiDates';
 import { emiService } from '../services/emiService';
 
 export const ProductDetailPage: React.FC = () => {
@@ -33,6 +34,7 @@ export const ProductDetailPage: React.FC = () => {
     tenureMonths: number;
     monthlyAmount: number;
     totalPayable: number;
+    nextDueDate: string;
   } | null>(null);
 
   const { data: product, isLoading, isError, error, refetch } = useProduct(id);
@@ -79,6 +81,8 @@ export const ProductDetailPage: React.FC = () => {
 
     try {
       setIsSubmitting(true);
+      const createdAt = new Date();
+      const nextDueDate = getNextEmiDate(createdAt);
       const res = await emiService.createOrder({
         productId: product.id,
         variantId: selectedVariant.id,
@@ -96,7 +100,8 @@ export const ProductDetailPage: React.FC = () => {
         monthlyAmount: selectedPlan.monthlyAmount,
         totalPayable: selectedPlan.totalPayable,
         isNoCost: selectedPlan.isNoCost,
-        createdAt: new Date().toISOString(),
+        createdAt: createdAt.toISOString(),
+        nextDueDate: nextDueDate.toISOString(),
       });
 
       setOrderConfirmation({
@@ -105,6 +110,7 @@ export const ProductDetailPage: React.FC = () => {
         tenureMonths: selectedPlan.tenureMonths,
         monthlyAmount: selectedPlan.monthlyAmount,
         totalPayable: selectedPlan.totalPayable,
+        nextDueDate: nextDueDate.toISOString(),
       });
     } catch (err) {
       console.error('Order submission error:', err);
@@ -327,6 +333,12 @@ export const ProductDetailPage: React.FC = () => {
                 <span className="font-semibold text-emerald-700 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Lien Initiated
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-gray-500">First EMI Due</span>
+                <span className="font-semibold text-gray-800">
+                  {formatEmiDate(orderConfirmation.nextDueDate)}
                 </span>
               </div>
             </div>

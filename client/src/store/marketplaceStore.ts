@@ -13,6 +13,7 @@ export interface SubmittedOrder {
   totalPayable: number;
   isNoCost: boolean;
   createdAt: string;
+  nextDueDate: string;
 }
 
 interface MarketplaceState {
