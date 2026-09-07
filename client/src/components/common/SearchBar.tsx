@@ -25,8 +25,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        aria-label="Search products"
         placeholder={placeholder}
-        className="w-full bg-white border border-gray-200 text-gray-800 text-sm rounded-full pl-11 pr-10 py-2.5 shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-fi-purple/20 focus:border-fi-purple transition-all"
+        className="w-full bg-white border border-gray-200 text-gray-800 text-sm rounded-full pl-11 pr-10 py-2.5 shadow-sm placeholder:text-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-fi-purple/40 focus-visible:border-fi-purple transition-all"
       />
       {value && (
         <button
@@ -35,7 +36,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             onChange('');
             onClear?.();
           }}
-          className="absolute right-3.5 p-1 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none"
+          className="absolute right-3.5 p-1 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-fi-purple/40"
           aria-label="Clear search"
         >
           <X className="w-4 h-4" />
