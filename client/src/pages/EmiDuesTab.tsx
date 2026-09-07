@@ -2,7 +2,7 @@ import React from 'react';
 import { useMarketplaceStore } from '../store/marketplaceStore';
 import { Card } from '../components/common/Card';
 import { formatCurrency } from '../utils/formatCurrency';
-import { formatEmiDate, getNextEmiDate } from '../utils/emiDates';
+import { formatEmiDate, getEmiSchedule, getNextEmiDate } from '../utils/emiDates';
 import { Calendar, CheckCircle2, ReceiptIndianRupee, ShieldCheck } from 'lucide-react';
 
 interface EmiDuesTabProps {
@@ -95,6 +95,16 @@ export const EmiDuesTab: React.FC<EmiDuesTabProps> = ({ onBrowseMarketplace }) =
                 <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Auto-Debit Active</span>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-gray-100">
+                <span className="text-[11px] font-semibold text-gray-500 block mb-1">Upcoming payments</span>
+                <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                  {getEmiSchedule(order.createdAt, order.tenureMonths).slice(0, 6).map((date, index) => (
+                    <span key={date.toISOString()} className="flex-shrink-0 text-[10px] text-gray-700 bg-gray-50 border border-gray-100 rounded-lg px-2 py-1">
+                      {index + 1}. {formatEmiDate(date)}
+                    </span>
+                  ))}
                 </div>
               </div>
             </Card>

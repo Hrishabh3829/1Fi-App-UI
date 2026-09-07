@@ -11,7 +11,7 @@ import { ProceedCTA } from '../components/marketplace/ProductDetail/ProceedCTA';
 import { Skeleton } from '../components/common/Skeleton';
 import { ErrorState } from '../components/marketplace/ErrorState';
 import { formatCurrency } from '../utils/formatCurrency';
-import { formatEmiDate, getNextEmiDate } from '../utils/emiDates';
+import { formatEmiDate, getEmiSchedule, getNextEmiDate } from '../utils/emiDates';
 import { emiService } from '../services/emiService';
 
 export const ProductDetailPage: React.FC = () => {
@@ -35,6 +35,7 @@ export const ProductDetailPage: React.FC = () => {
     monthlyAmount: number;
     totalPayable: number;
     nextDueDate: string;
+    schedule: string[];
   } | null>(null);
 
   const { data: product, isLoading, isError, error, refetch } = useProduct(id);
@@ -111,6 +112,7 @@ export const ProductDetailPage: React.FC = () => {
         monthlyAmount: selectedPlan.monthlyAmount,
         totalPayable: selectedPlan.totalPayable,
         nextDueDate: nextDueDate.toISOString(),
+        schedule: getEmiSchedule(createdAt, selectedPlan.tenureMonths).map((date) => date.toISOString()),
       });
     } catch (err) {
       console.error('Order submission error:', err);
@@ -277,6 +279,7 @@ export const ProductDetailPage: React.FC = () => {
             isLoading={isEmiLoading}
             selectedPlan={selectedPlan}
             onSelectPlan={setSelectedPlan}
+            productPrice={currentPrice}
           />
         </div>
 
@@ -321,6 +324,16 @@ export const ProductDetailPage: React.FC = () => {
               <div className="flex justify-between items-center text-xs">
                 <span className="text-gray-500">Reference ID</span>
                 <span className="font-mono font-bold text-gray-800">{orderConfirmation.orderId}</span>
+              </div>
+              <div className="pt-2 border-t border-gray-200">
+                <span className="text-gray-500 text-xs block mb-1">Payment schedule</span>
+                <div className="grid grid-cols-3 gap-1.5 max-h-24 overflow-y-auto">
+                  {orderConfirmation.schedule.map((date, index) => (
+                    <span key={date} className="text-[10px] text-gray-700 bg-white border border-gray-100 rounded-lg px-2 py-1">
+                      {index + 1}. {formatEmiDate(date)}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className="flex justify-between items-center text-xs">
                 <span className="text-gray-500">Plan</span>

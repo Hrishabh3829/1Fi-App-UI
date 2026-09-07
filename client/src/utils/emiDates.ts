@@ -11,6 +11,27 @@ export const getNextEmiDate = (date: Date | string = new Date()): Date => {
   return new Date(year, month + 1, Math.min(day, lastDayOfNextMonth));
 };
 
+export const getEmiSchedule = (
+  startDate: Date | string,
+  tenureMonths: number
+): Date[] => {
+  const sourceDate = getDateValue(startDate);
+  const anchorDay = sourceDate.getDate();
+
+  return Array.from({ length: tenureMonths }, (_, index) => {
+    const monthOffset = index + 1;
+    const targetYear = sourceDate.getFullYear();
+    const targetMonth = sourceDate.getMonth() + monthOffset;
+    const lastDayOfTargetMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+
+    return new Date(
+      targetYear,
+      targetMonth,
+      Math.min(anchorDay, lastDayOfTargetMonth)
+    );
+  });
+};
+
 export const formatEmiDate = (date: Date | string): string =>
   new Intl.DateTimeFormat('en-IN', {
     day: 'numeric',

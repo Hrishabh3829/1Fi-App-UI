@@ -8,12 +8,14 @@ interface EMIPlanCardProps {
   plan: EmiPlan;
   isSelected: boolean;
   onSelect: () => void;
+  badge?: string;
 }
 
 export const EMIPlanCard: React.FC<EMIPlanCardProps> = ({
   plan,
   isSelected,
   onSelect,
+  badge,
 }) => {
   return (
     <div
@@ -38,7 +40,7 @@ export const EMIPlanCard: React.FC<EMIPlanCardProps> = ({
         </div>
 
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="font-bold text-sm text-gray-900">
               {formatCurrency(plan.monthlyAmount)}
               <span className="text-xs font-normal text-gray-500"> / mo</span>
@@ -48,6 +50,11 @@ export const EMIPlanCard: React.FC<EMIPlanCardProps> = ({
             ) : (
               <span className="text-[11px] text-gray-500">
                 {plan.interestRate}% p.a.
+              </span>
+            )}
+            {badge && (
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                {badge}
               </span>
             )}
           </div>
